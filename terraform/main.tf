@@ -55,5 +55,5 @@ resource "aws_lambda_alias" "alias" {
   name             = local.env.alias_name
   description      = "${local.env.alias_name} deploy from terraform"
   function_name    = aws_lambda_function.func.arn
-  function_version = aws_lambda_function.func.version
+  function_version = (terraform.workspace == "prod") ? aws_lambda_function.func.version : "$LATEST"
 }
