@@ -7,11 +7,11 @@ Correr script de inicialización.
 
 En Linux:
 
-    ./init.sh
+    ./init.sh <NOMBRE_DE_LAMBDA>
 
 En Windows:
 
-    ./init.ps1
+    ./init.ps1 <NOMBRE_DE_LAMBDA>
 
 ## Deploy dev
 
