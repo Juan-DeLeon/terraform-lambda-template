@@ -25,5 +25,5 @@ En Windows:
     terraform apply
     yes
 
-| :exclamation:  Deploys a prod cambian las variables de ambiente en $LATEST. |
-|-----------------------------------------|
+| :exclamation:  Deploys a prod cambian las variables de entorno en $LATEST. |
+|----------------------------------------------------------------------------|
