@@ -5,10 +5,12 @@ if (!$args[0]) {
     exit 1
 }
 
+$function_name = $args[0]
+
 terraform init
 terraform workspace select prod
-terraform import aws_lambda_function.func $args[0]
-terraform import aws_lambda_alias.alias $args[0]/Prod
+terraform import aws_lambda_function.func $function_name
+terraform import aws_lambda_alias.alias $function_name/Prod
 terraform workspace select dev
-terraform import aws_lambda_function.func $args[0]
-terraform import aws_lambda_alias.alias $args[0]/Dev
+terraform import aws_lambda_function.func $function_name
+terraform import aws_lambda_alias.alias $function_name/Dev
