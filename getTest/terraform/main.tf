@@ -2,13 +2,15 @@ provider "aws" {
   region  = "us-east-1"
   profile = "default"
 }
-provider "archive" {}
 
 terraform {
   required_version = ">= 1.0.2"
   required_providers {
     aws = {
       source = "hashicorp/aws"
+    }
+    archive = {
+      source = "hashicorp/archive"
     }
   }
 }
@@ -17,8 +19,8 @@ terraform {
 # filtering out unneeded files.
 data "archive_file" "lambda_source_package" {
   type        = "zip"
-  source_dir  = "../src/"
-  output_path = "../function.zip"
+  source_dir  = "${path.module}/../src/"
+  output_path = "${path.module}/../function.zip"
 }
 
 data "aws_lambda_function" "f_data" {
