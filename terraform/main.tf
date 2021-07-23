@@ -2,13 +2,15 @@ provider "aws" {
   region  = "us-east-1"
   profile = "default"
 }
-provider "archive" {}
 
 terraform {
   required_version = ">= 1.0.2"
   required_providers {
     aws = {
       source = "hashicorp/aws"
+    }
+    archive = {
+      source = "hashicorp/archive"
     }
   }
 }
