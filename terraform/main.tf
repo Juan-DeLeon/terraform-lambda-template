@@ -29,8 +29,10 @@ data "aws_lambda_function" "f_data" {
 
 locals {
   # load env config for current workspace
-  env = lookup(var.env_config, terraform.workspace)
+  env           = lookup(var.env_config, terraform.workspace)
+  secret_name   = (terraform.workspace == "prod") ? var.secret_prod : var.secret_dev
   function_data = data.aws_lambda_function.f_data
+  alias_version = (terraform.workspace == "prod") ? aws_lambda_function.func.version : "$LATEST"
 }
 
 # Deploy the Lambda function to AWS
@@ -45,12 +47,12 @@ resource "aws_lambda_function" "func" {
   source_code_hash = filebase64sha256(data.archive_file.lambda_source_package.output_path)
   environment {
     variables = {
-      SECRET_NAME = local.env.secret_name
+      SECRET_NAME = local.secret_name
     }
   }
   lifecycle {
     prevent_destroy = true
-    ignore_changes = [layers, timeout]
+    ignore_changes  = [layers, timeout]
   }
 }
 
@@ -58,5 +60,5 @@ resource "aws_lambda_alias" "alias" {
   name             = local.env.alias_name
   description      = "${local.env.alias_name} deploy from terraform"
   function_name    = aws_lambda_function.func.arn
-  function_version = (terraform.workspace == "prod") ? aws_lambda_function.func.version : "$LATEST"
+  function_version = local.alias_version
 }
