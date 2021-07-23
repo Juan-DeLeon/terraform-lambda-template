@@ -1,1 +1,1 @@
-function_name = "test"
+function_name = "getTest"

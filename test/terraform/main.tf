@@ -49,6 +49,7 @@ resource "aws_lambda_function" "func" {
     }
   }
   lifecycle {
+    prevent_destroy = true
     ignore_changes = [layers, timeout]
   }
 }
